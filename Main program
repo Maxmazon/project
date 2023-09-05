@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "product.h"
+#include "cart.h"
+
+int main() {
+    Product products[MAX_PRODUCTS];
+    int productCount = 0;
+
+    CartItem cart[MAX_CART_ITEMS];
+    int cartCount = 0;
+
+    int choice;
+
+    while (1) {
+        printf("Оберіть опцію:\n");
+        printf("1. Додати продукт\n");
+        printf("2. Додати товар до корзини\n");
+        printf("3. Вивести список продуктів\n");
+        printf("4. Переглянути корзину\n");
+        printf("0. Вихід\n");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1: {
+                char name[MAX_NAME_LENGTH];
+                char description[MAX_DESCRIPTION_LENGTH];
+                float price;
+                printf("Введіть назву продукту: ");
+                scanf("%s", name);
+                printf("Введіть опис продукту: ");
+                scanf("%s", description);
+                printf("Введіть ціну продукту: ");
+                scanf("%f", &price);
+                addProduct(products, &productCount, name, description, price);
+                break;
+            }
+            case 2: {
+                int productId, quantity;
+                printf("Введіть ID продукту: ");
+                scanf("%d", &productId);
+                printf("Введіть кількість: ");
+                scanf("%d", &quantity);
+                addToCart(cart, &cartCount, productId, quantity);
+                break;
+            }
+            case 3: {
+                listProducts(products, productCount);
+                break;
+            }
+            case 4: {
+                viewCart(cart, cartCount);
+                break;
+            }
+            case 0: {
+                exit(0);
+            }
+            default: {
+                printf("Неправильний вибір. Будь ласка, виберіть іншу опцію.\n");
+            }
+        }
+    }
+
+    return 0;
+}
